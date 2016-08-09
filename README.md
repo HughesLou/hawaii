@@ -1,3 +1,3 @@
-# hawaii
+# Hawaii
 
 ## by Hughes
