@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<company>
+    <staff>
+        <firstname>hughes</firstname>
+        <lastname>lou</lastname>
+        <nickname>hugh</nickname>
+        <salary>100000</salary>
+    </staff>
+    <staff>
+        <firstname>nick</firstname>
+        <lastname>lee</lastname>
+        <nickname>nick</nickname>
+        <salary>200000</salary>
+    </staff>
+</company>
