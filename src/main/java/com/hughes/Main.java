@@ -6,6 +6,8 @@ package com.hughes;
 
 import com.hughes.algorithm.Sort;
 
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
@@ -23,6 +25,12 @@ public class Main {
     }
 
     public static void main(String[] args) {
+
+        ClassLoader classLoader = Main.class.getClassLoader();
+        for (URL url: ((URLClassLoader)classLoader).getURLs()){
+            System.out.println(url.getFile());
+        }
+
         ConcurrentLinkedQueue concurrentLinkedQueue = new ConcurrentLinkedQueue();
         concurrentLinkedQueue.offer("test1");
         concurrentLinkedQueue.add("test2");
