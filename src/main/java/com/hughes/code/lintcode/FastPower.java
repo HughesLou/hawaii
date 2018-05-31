@@ -4,6 +4,7 @@ package com.hughes.code.lintcode;
  * Created by Hughes on 2016/8/15.
  */
 public class FastPower {
+
     /*
      * @param a, b, n: 32bit integers
      * @return: An integer

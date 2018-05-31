@@ -4,9 +4,11 @@
 
 package com.hughes.lou.picture;
 
-import org.apache.commons.lang3.StringUtils;
-
-import java.io.*;
+import java.io.BufferedOutputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * Created by Hughes on 2016/1/25.
@@ -43,8 +45,8 @@ public class Generator {
         }
     }
 
-    private static void pixedWrite(int i, int j, MethodIn140 method, DataOutputStream dataOutputStream) throws
-            IOException {
+    private static void pixedWrite(int i, int j, MethodIn140 method,
+            DataOutputStream dataOutputStream) throws IOException {
         dataOutputStream.writeChar(method.RED(i, j));
         dataOutputStream.writeChar(' ');
         dataOutputStream.writeChar(method.GREEN(i, j));

@@ -1,13 +1,16 @@
 package com.hughes.code.lintcode;
 
-import com.hughes.model.TreeNode;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
-import java.util.*;
+import com.hughes.model.TreeNode;
 
 /**
  * Created by Hughes on 2016/8/15.
  */
 public class BinaryTreeLevelOrderTraversal {
+
     /**
      * @param root: The root of binary tree.
      * @return: buttom-up level order a list of lists of integer

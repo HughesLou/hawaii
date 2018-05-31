@@ -4,6 +4,7 @@ package com.hughes.model;
  * Created by Hughes on 2016/8/14.
  */
 public class ListNode {
+
     int val;
 
     ListNode next;

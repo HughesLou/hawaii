@@ -4,6 +4,7 @@ package com.hughes.code.lintcode;
  * Created by Hughes on 2016/8/14.
  */
 public class PartitionArray {
+
     /**
      * @param nums: an array of integers
      * @return: nothing
@@ -30,7 +31,7 @@ public class PartitionArray {
     }
 
     public static void main(String[] args) {
-        int[] nums = {1, 2, 3, 4};
+        int[] nums = { 1, 2, 3, 4 };
         new PartitionArray().partitionArray(nums);
         System.out.println(nums);
     }

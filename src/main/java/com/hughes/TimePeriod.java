@@ -4,18 +4,12 @@
 
 package com.hughes;
 
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.joda.time.Minutes;
-import org.joda.time.ReadablePeriod;
-
 /**
  * Description:
  * Author: 1466811
  * Date:   3:37 PM 8/2/15
  */
-public enum TimePeriod
-{
+public enum TimePeriod {
     /*MINUTE(Dimension.MINUTE,
             (from,
              to) -> Minutes.minutesBetween(from, to).getMinutes() + 1,
@@ -51,12 +45,12 @@ public enum TimePeriod
             from -> from.withZone(DateTimeZone.UTC)
                     .withDayOfMonth(1)
                     .withTimeAtStartOfDay());
-
+    
     private Dimension<Timestamp> dimension;
     private BiFunction<DateTime, DateTime, Integer> getNumberOfPoints;
     private Function<Integer, ReadablePeriod> getPeriodFromNbOfInterval;
     private Function<DateTime, DateTime> getStartOfInterval;
-
+    
     private TimePeriod(Dimension<Timestamp> dimension,
                        BiFunction<DateTime, DateTime, Integer> getNumberOfPoints,
                        Function<Integer, ReadablePeriod> getPeriodFromNbOfInterval,
@@ -67,23 +61,23 @@ public enum TimePeriod
         this.getPeriodFromNbOfInterval = getPeriodFromNbOfInterval;
         this.getStartOfInterval = getStartOfInterval;
     }
-
+    
     public Dimension<Timestamp> getDimension()
     {
         return dimension;
     }
-
+    
     public int getNumberOfPoints(DateTime from,
                                  DateTime to)
     {
         return getNumberOfPoints.apply(from, to);
     }
-
+    
     public ReadablePeriod getPeriodFromNbOfInterval(int nbOfInterval)
     {
         return getPeriodFromNbOfInterval.apply(nbOfInterval);
     }
-
+    
     public DateTime getStartOfInterval(DateTime from)
     {
         return getStartOfInterval.apply(from);

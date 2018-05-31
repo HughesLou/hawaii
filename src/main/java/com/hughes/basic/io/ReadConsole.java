@@ -12,8 +12,8 @@ public class ReadConsole {
 
     public static void main(String[] args) {
         classic();
-//        scanner();
-//        console();
+        //        scanner();
+        //        console();
     }
 
     public static void classic() {

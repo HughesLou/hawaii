@@ -1,5 +1,7 @@
 package com.hughes.zmq;
 
+import java.util.concurrent.TimeUnit;
+
 import org.zeromq.ZMQ;
 
 /**
@@ -20,14 +22,13 @@ public class TaskWork {
 
         //  Process tasks forever
         while (!Thread.currentThread().isInterrupted()) {
-            String string = new String(receiver.recv(0)).trim();
-            long msec = Long.parseLong(string);
+            String value = new String(receiver.recv(0)).trim();
             //  Simple progress indicator for the viewer
             System.out.flush();
-            System.out.print(string + '.');
+            System.out.print(value + '.');
 
             //  Do the work
-            Thread.sleep(msec);
+            TimeUnit.MILLISECONDS.sleep(Long.parseLong(value));
 
             //  Send results to sink
             sender.send("".getBytes(), 0);

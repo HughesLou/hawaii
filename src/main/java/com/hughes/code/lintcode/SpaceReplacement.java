@@ -27,7 +27,7 @@ public class SpaceReplacement {
             }
         }
         string = Arrays.copyOf(string, newLength);
-//        string[newLength] = 0;
+        //        string[newLength] = 0;
         int j = 1;
         for (int i = length - 1; i >= 0; --i) {
             if (' ' == string[i]) {

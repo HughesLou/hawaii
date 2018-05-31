@@ -8,6 +8,7 @@ package com.hughes.web.crawler.model;
  * Created by 1466811 on 12/30/2015.
  */
 public class LinkFilter {
+
     private String url;
 
     public LinkFilter(String url) {

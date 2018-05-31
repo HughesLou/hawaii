@@ -4,7 +4,8 @@ package com.hughes.code.lintcode;
  * Created by Hughes on 2016/8/14.
  */
 public class BoyerMoore {
-    public static void main(String[] args){
+
+    public static void main(String[] args) {
         int result = strStr("This is le a example", "ple");
         System.out.print(result);
     }
@@ -36,7 +37,7 @@ public class BoyerMoore {
                 }
             }
             if (skip == 0) {
-                return i;    // found
+                return i; // found
             }
         }
         return -1;

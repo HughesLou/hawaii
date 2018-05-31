@@ -5,7 +5,11 @@
 package com.hughes.lou.sample;
 
 import java.util.Arrays;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ForkJoinPool;
+import java.util.concurrent.ForkJoinTask;
+import java.util.concurrent.RecursiveAction;
+import java.util.concurrent.RecursiveTask;
 
 /**
  * Created by Hughes on 2016/3/27.
@@ -13,7 +17,7 @@ import java.util.concurrent.*;
 public class ForkJoinSample {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
-        double[] array = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        double[] array = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
         double result = new ForkJoinSample().sumOfSquares(new ForkJoinPool(), array);
         System.out.println(result);
 
@@ -24,6 +28,7 @@ public class ForkJoinSample {
     }
 
     static class Fibonacci extends RecursiveTask<Integer> {
+
         final int n;
 
         Fibonacci(int n) {
@@ -50,6 +55,7 @@ public class ForkJoinSample {
     }
 
     class Applyer extends RecursiveAction {
+
         final double[] array;
         final int lo, hi;
         double result;
@@ -97,6 +103,7 @@ public class ForkJoinSample {
     }
 
     class SortTask extends RecursiveAction {
+
         static final int THRESHOLD = 100;
         final long[] array;
         final int lo, hi;

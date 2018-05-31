@@ -4,17 +4,19 @@
 
 package com.hughes.web.crawler.service;
 
-import com.hughes.web.crawler.model.LinkFilter;
-import com.hughes.web.crawler.model.LinkedQueue;
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Set;
+import com.hughes.web.crawler.model.LinkFilter;
+import com.hughes.web.crawler.model.LinkedQueue;
 
 /**
  * Created by 1466811 on 12/30/2015.
  */
 public class MyCrawler {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(MyCrawler.class);
 
     private void initCrawlerWithSeeds(LinkedQueue LinkedQueue, String[] seeds) {
@@ -28,8 +30,7 @@ public class MyCrawler {
         initCrawlerWithSeeds(LinkedQueue, seeds);
         while (!LinkedQueue.unVisitedUrlsEmpty() && LinkedQueue.getVisitedUrlNum() <= 100) {
             String visitUrl = (String) LinkedQueue.unVisitedUrlDeQueue();
-            if (visitUrl == null)
-                continue;
+            if (visitUrl == null) continue;
             FileDownload fileDownload = new FileDownload();
             fileDownload.downloadFile(visitUrl, "C:\\Loo\\Repository\\Hughes\\Data\\Crawler");
             LinkedQueue.addVisitedUrl(visitUrl);
@@ -42,7 +43,7 @@ public class MyCrawler {
 
     public static void main(String[] args) {
         MyCrawler crawler = new MyCrawler();
-        crawler.crawling(new String[]{"http://docs.openstack.org/infra/jenkins-job-builder"});
+        crawler.crawling(new String[] { "http://docs.openstack.org/infra/jenkins-job-builder" });
         LOGGER.info("Done");
     }
 }

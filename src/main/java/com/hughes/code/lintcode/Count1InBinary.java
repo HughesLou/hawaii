@@ -4,6 +4,7 @@ package com.hughes.code.lintcode;
  * Created by Hughes on 2016/8/14.
  */
 public class Count1InBinary {
+
     /**
      * @param num: an integer
      * @return: an integer, the number of ones in num
@@ -11,8 +12,8 @@ public class Count1InBinary {
     public int countOnes(int num) {
         int count = 0;
         while (0 != num) {
-            num &= num -1;
-            count ++;
+            num &= num - 1;
+            count++;
         }
         /*int times = 0;
         while (0 != num && times < 32) {

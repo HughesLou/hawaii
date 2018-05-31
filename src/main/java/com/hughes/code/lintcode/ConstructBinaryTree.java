@@ -6,6 +6,7 @@ import com.hughes.model.TreeNode;
  * Created by Hughes on 2016/8/14.
  */
 public class ConstructBinaryTree {
+
     /**
      * @param preorder : A list of integers that preorder traversal of a tree
      * @param inorder  : A list of integers that inorder traversal of a tree
@@ -16,14 +17,13 @@ public class ConstructBinaryTree {
 
     }
 
-    public TreeNode build(int[] preorder, int[] inorder, int pStart, int pEnd, int iStart, int iEnd) {
-        if (pStart > pEnd)
-            return null;
+    public TreeNode build(int[] preorder, int[] inorder, int pStart, int pEnd, int iStart,
+            int iEnd) {
+        if (pStart > pEnd) return null;
         int head = preorder[pStart];
         int i = iStart;
         for (; i < iEnd; i++) {
-            if (inorder[i] == head)
-                break;
+            if (inorder[i] == head) break;
         }
         TreeNode node = new TreeNode(head);
         int lenLeft = i - iStart;
@@ -33,8 +33,8 @@ public class ConstructBinaryTree {
     }
 
     public static void main(String[] args) {
-        int[] preoder = {1, 2, 3};
-        int[] inorder = {2, 1, 3};
+        int[] preoder = { 1, 2, 3 };
+        int[] inorder = { 2, 1, 3 };
         TreeNode treeNode = new ConstructBinaryTree().buildTree(preoder, inorder);
         System.out.println(treeNode);
     }

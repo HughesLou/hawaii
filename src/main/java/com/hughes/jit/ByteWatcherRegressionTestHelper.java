@@ -8,9 +8,10 @@ package com.hughes.jit;
  * Created by 1466811 on 11/12/2015.
  */
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 public class ByteWatcherRegressionTestHelper {
+
     private final ByteWatcherSingleThread bw;
 
     public ByteWatcherRegressionTestHelper(Thread thread) {
@@ -21,12 +22,10 @@ public class ByteWatcherRegressionTestHelper {
         this(Thread.currentThread());
     }
 
-    public void testAllocationNotExceeded(
-            Runnable job, long limit) {
+    public void testAllocationNotExceeded(Runnable job, long limit) {
         bw.reset();
         job.run();
         long size = bw.calculateAllocations();
-        assertTrue(String.format("exceeded limit: %d using: %d%n",
-                limit, size), size <= limit);
+        assertTrue(String.format("exceeded limit: %d using: %d%n", limit, size), size <= limit);
     }
 }

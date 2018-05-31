@@ -4,22 +4,28 @@
 
 package com.hughes.web.crawler.service;
 
-import org.apache.commons.httpclient.*;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpException;
+import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.ProxyHost;
+import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.commons.httpclient.auth.AuthScope;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
 /**
  * Created by 1466811 on 12/30/2015.
  */
 public class FileDownload {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(FileDownload.class);
 
     public String getFileNameByUrl(String url, String contentType) {
@@ -42,7 +48,8 @@ public class FileDownload {
 
     private void saveToLocal(byte[] data, String folder, String fileName) {
         try {
-            DataOutputStream out = new DataOutputStream(new FileOutputStream(new File(folder, fileName)));
+            DataOutputStream out = new DataOutputStream(
+                    new FileOutputStream(new File(folder, fileName)));
             for (int i = 0; i < data.length; i++) {
                 out.write(data[i]);
             }
@@ -63,11 +70,11 @@ public class FileDownload {
         httpClient.getParams().setAuthenticationPreemptive(true);
         httpClient.getState().setProxyCredentials(AuthScope.ANY,
                 new UsernamePasswordCredentials("1466811", "lou@201512"));
-//        httpClient.getState().setProxyCredentials(new AuthScope("10.24.129.241", 8080),
-//                new UsernamePasswordCredentials("1466811", "lou@201512"));
-//        httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(5000);
+        //        httpClient.getState().setProxyCredentials(new AuthScope("10.24.129.241", 8080),
+        //                new UsernamePasswordCredentials("1466811", "lou@201512"));
+        //        httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(5000);
         GetMethod getMethod = new GetMethod(url);
-//        getMethod.getParams().setParameter(HttpMethodParams.SO_TIMEOUT, 5000);
+        //        getMethod.getParams().setParameter(HttpMethodParams.SO_TIMEOUT, 5000);
         getMethod.getParams().setParameter(HttpMethodParams.RETRY_HANDLER,
                 new DefaultHttpMethodRetryHandler());
         try {
@@ -77,7 +84,8 @@ public class FileDownload {
                 fileName = null;
             }
             byte[] responseBody = getMethod.getResponseBody();
-            fileName = getFileNameByUrl(url, getMethod.getResponseHeader("Content-Type").getValue());
+            fileName = getFileNameByUrl(url,
+                    getMethod.getResponseHeader("Content-Type").getValue());
             saveToLocal(responseBody, folder, fileName);
         } catch (HttpException e) {
             LOGGER.error("Please check your provided http address!");

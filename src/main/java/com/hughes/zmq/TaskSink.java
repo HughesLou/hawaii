@@ -21,11 +21,10 @@ public class TaskSink {
         long tstart = System.currentTimeMillis();
 
         //  Process 100 confirmations
-        int task_nbr;
-        int total_msec = 0;     //  Total calculated cost in msecs
-        for (task_nbr = 0; task_nbr < 100; task_nbr++) {
+        int taskNumber;
+        for (taskNumber = 0; taskNumber < 100; taskNumber++) {
             string = new String(receiver.recv(0)).trim();
-            if ((task_nbr / 10) * 10 == task_nbr) {
+            if ((taskNumber / 10) * 10 == taskNumber) {
                 System.out.print(":");
             } else {
                 System.out.print(".");

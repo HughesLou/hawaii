@@ -10,5 +10,6 @@ package com.hughes;
  * Date:   12:05 PM 8/5/15
  */
 public interface Test {
+
     public void ta();
 }

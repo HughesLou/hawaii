@@ -4,65 +4,40 @@
 
 package com.hughes.jit;
 
-import java.util.*;
-import java.util.concurrent.*;
-//import java.util.function.*;
-//import java.util.stream.*;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * Created by 1466811 on 11/12/2015.
  */
 public class ByteWatcher {
-    /*public static final int SAMPLING_INTERVAL =
-            Integer.getInteger("samplingIntervalMillis", 500);
-    public static final Consumer<Thread> EMPTY = a -> { };
-    public static final BiConsumer<Thread, Long> BI_EMPTY =
-            (a, b) -> { };
+
+    public static final int SAMPLING_INTERVAL = Integer.getInteger("samplingIntervalMillis", 500);
+    public static final Consumer<Thread> EMPTY = a -> {};
+    public static final BiConsumer<Thread, Long> BI_EMPTY = (a, b) -> {};
     private final Map<Thread, ByteWatcherSingleThread> ams;
+    private final ScheduledExecutorService monitorService = Executors
+            .newSingleThreadScheduledExecutor();
     private volatile Consumer<Thread> threadCreated = EMPTY;
-    private volatile Consumer<Thread> threadDied =
-            EMPTY;
-    private volatile ByteWatch byteWatch = new ByteWatch(
-            BI_EMPTY, Long.MAX_VALUE
-    );
-
-    private static class ByteWatch
-            implements BiConsumer<Thread, Long>, Predicate<Long>{
-        private final long threshold;
-        private final BiConsumer<Thread, Long> byteWatch;
-
-        public ByteWatch(BiConsumer<Thread, Long> byteWatch,
-                         long threshold) {
-            this.byteWatch = byteWatch;
-            this.threshold = threshold;
-        }
-
-        public void accept(Thread thread, Long currentBytes) {
-            byteWatch.accept(thread, currentBytes);
-        }
-
-        public boolean test(Long currentBytes) {
-            return threshold < currentBytes;
-        }
-    }
-
-    private final ScheduledExecutorService monitorService =
-            Executors.newSingleThreadScheduledExecutor();
+    private volatile Consumer<Thread> threadDied = EMPTY;
+    private volatile ByteWatch byteWatch = new ByteWatch(BI_EMPTY, Long.MAX_VALUE);
 
     public ByteWatcher() {
         // do this first so that the worker thread is not considered
         // a "newly created" thread
-        monitorService.scheduleAtFixedRate(
-                this::checkThreads,
-                SAMPLING_INTERVAL, SAMPLING_INTERVAL,
+        monitorService.scheduleAtFixedRate(this::checkThreads, SAMPLING_INTERVAL, SAMPLING_INTERVAL,
                 TimeUnit.MILLISECONDS);
 
-        ams = Thread.getAllStackTraces()
-                .keySet()
-                .stream()
-                .map(ByteWatcherSingleThread::new)
-                .collect(Collectors.toConcurrentMap(
-                        ByteWatcherSingleThread::getThread,
+        ams = Thread.getAllStackTraces().keySet().stream().map(ByteWatcherSingleThread::new)
+                .collect(Collectors.toConcurrentMap(ByteWatcherSingleThread::getThread,
                         (ByteWatcherSingleThread am) -> am));
         // Heinz: Streams make sense, right? ;-)
     }
@@ -75,8 +50,7 @@ public class ByteWatcher {
         threadDied = action;
     }
 
-    public void onByteWatch(
-            BiConsumer<Thread, Long> action, long threshold) {
+    public void onByteWatch(BiConsumer<Thread, Long> action, long threshold) {
         this.byteWatch = new ByteWatch(action, threshold);
     }
 
@@ -126,5 +100,24 @@ public class ByteWatcher {
         if (bw.test(bytesAllocated)) {
             bw.accept(am.getThread(), bytesAllocated);
         }
-    }*/
+    }
+
+    private static class ByteWatch implements BiConsumer<Thread, Long>, Predicate<Long> {
+
+        private final long threshold;
+        private final BiConsumer<Thread, Long> byteWatch;
+
+        public ByteWatch(BiConsumer<Thread, Long> byteWatch, long threshold) {
+            this.byteWatch = byteWatch;
+            this.threshold = threshold;
+        }
+
+        public void accept(Thread thread, Long currentBytes) {
+            byteWatch.accept(thread, currentBytes);
+        }
+
+        public boolean test(Long currentBytes) {
+            return threshold < currentBytes;
+        }
+    }
 }

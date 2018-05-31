@@ -8,6 +8,7 @@ package com.hughes.lou.sample;
  * Created by Hughes on 2016/3/23.
  */
 public class ThreadLocalSample {
+
     public final static ThreadLocal<String> TEST_THREAD_NAME_LOCAL = new ThreadLocal<String>();
     public final static ThreadLocal<String> TEST_THREAD_VALUE_LOCAL = new ThreadLocal<String>();
 
@@ -17,6 +18,7 @@ public class ThreadLocalSample {
             final String name = "线程-【" + i + "】";
             final String value = String.valueOf(i);
             new Thread() {
+
                 public void run() {
                     try {
                         System.out.println(Thread.currentThread().getName());
@@ -32,17 +34,21 @@ public class ThreadLocalSample {
         }
     }
 
-    public static void callA() { callB(); }
+    public static void callA() {
+        callB();
+    }
 
     public static void callB() {
         System.out.println(Thread.currentThread().getName());
         new ThreadLocalSample().callC();
     }
 
-    public void callC() { callD(); }
+    public void callC() {
+        callD();
+    }
 
     public void callD() {
-        System.out.println(Thread.currentThread().getName() + " -- " + TEST_THREAD_NAME_LOCAL.get() + "\t=\t" +
-                TEST_THREAD_VALUE_LOCAL.get());
+        System.out.println(Thread.currentThread().getName() + " -- " + TEST_THREAD_NAME_LOCAL.get()
+                + "\t=\t" + TEST_THREAD_VALUE_LOCAL.get());
     }
 }

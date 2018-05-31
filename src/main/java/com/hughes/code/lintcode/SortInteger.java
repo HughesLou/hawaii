@@ -6,6 +6,7 @@ import java.util.Arrays;
  * Created by Hughes on 2016/8/14.
  */
 public class SortInteger {
+
     /**
      * @param A an integer array
      * @return void
@@ -66,7 +67,7 @@ public class SortInteger {
     }
 
     public static void main(String[] args) {
-        int[] A = {3, 2, 1, 4, 5};
+        int[] A = { 3, 2, 1, 4, 5 };
         new SortInteger().sortIntegers(A);
     }
 }

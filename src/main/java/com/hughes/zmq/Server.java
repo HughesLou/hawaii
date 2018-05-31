@@ -1,11 +1,14 @@
 package com.hughes.zmq;
 
+import java.util.concurrent.TimeUnit;
+
 import org.zeromq.ZMQ;
 
 /**
  * Created by 1466811 on 9/16/2015.
  */
 public class Server {
+
     public static void main(String[] args) throws Exception {
         ZMQ.Context context = ZMQ.context(1);
 
@@ -16,10 +19,10 @@ public class Server {
         while (!Thread.currentThread().isInterrupted()) {
             // Wait for next request from the client
             byte[] request = responder.recv(0);
-            System.out.println("Received Hello");
+            System.out.println("Received Hello: " + new String(request));
 
             // Do some 'work'
-            Thread.sleep(1000);
+            TimeUnit.SECONDS.sleep(1);
 
             // Send reply back to client
             String reply = "World";

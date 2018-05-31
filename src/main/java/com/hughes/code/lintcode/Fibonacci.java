@@ -4,6 +4,7 @@ package com.hughes.code.lintcode;
  * Created by Hughes on 2016/8/14.
  */
 public class Fibonacci {
+
     /**
      * @param n: an integer
      * @return an integer f(n)

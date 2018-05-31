@@ -4,6 +4,8 @@
 
 package com.hughes.storm;
 
+import java.util.Map;
+
 import backtype.storm.task.TopologyContext;
 import backtype.storm.topology.BasicOutputCollector;
 import backtype.storm.topology.IBasicBolt;
@@ -12,12 +14,11 @@ import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 
-import java.util.Map;
-
 /**
  * Created by 1466811 on 9/18/2015.
  */
 public class SplitSentence implements IBasicBolt {
+
     @Override
     public void prepare(Map conf, TopologyContext context) {
     }

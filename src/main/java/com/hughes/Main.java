@@ -4,11 +4,11 @@
 
 package com.hughes;
 
-import com.hughes.algorithm.Sort;
-
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.concurrent.ConcurrentLinkedQueue;
+
+import com.hughes.algorithm.Sort;
 
 /**
  * Description:
@@ -17,17 +17,18 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public class Main {
 
-    private void test() throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+    private void test()
+            throws IllegalAccessException, InstantiationException, ClassNotFoundException {
         String string1 = String.class.newInstance();
         String string2 = (String) Class.forName(String.class.getName()).newInstance();
         AnotherOuterClass.class.newInstance();
-//        Constructor.newInstance("");
+        //        Constructor.newInstance("");
     }
 
     public static void main(String[] args) {
 
         ClassLoader classLoader = Main.class.getClassLoader();
-        for (URL url: ((URLClassLoader)classLoader).getURLs()){
+        for (URL url : ((URLClassLoader) classLoader).getURLs()) {
             System.out.println(url.getFile());
         }
 
@@ -51,8 +52,8 @@ public class Main {
         System.out.println("Done");
 
         Sort sort = new Sort();
-        int[] array1 = {1, 3, 5, 7, 9};
-        int[] array2 = {0, 2, 4, 6, 8};
+        int[] array1 = { 1, 3, 5, 7, 9 };
+        int[] array2 = { 0, 2, 4, 6, 8 };
         int[] result = sort.getSortedArray(array1, array2);
         System.out.println(result);
     }

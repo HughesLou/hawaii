@@ -1,18 +1,18 @@
 package com.hughes.file;
 
-import java.awt.*;
+import java.awt.Desktop;
 import java.io.File;
 
 /**
  * Created by Hughes on 2016/8/10.
  */
 public class AppForPDF {
+
     public static void main(String[] args) {
 
         try {
             if ((new File("sample.pdf")).exists()) {
-                Process p = Runtime
-                        .getRuntime()
+                Process p = Runtime.getRuntime()
                         .exec("rundll32 url.dll,FileProtocolHandler sample.pdf");
                 p.waitFor();
             } else {
@@ -22,7 +22,6 @@ public class AppForPDF {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
     }
 }
 

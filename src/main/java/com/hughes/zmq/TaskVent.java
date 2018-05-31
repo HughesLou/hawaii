@@ -1,8 +1,8 @@
 package com.hughes.zmq;
 
-import org.zeromq.ZMQ;
-
 import java.util.Random;
+
+import org.zeromq.ZMQ;
 
 /**
  * Created by 1466811 on 9/16/2015.
@@ -31,19 +31,19 @@ public class TaskVent {
         Random srandom = new Random(System.currentTimeMillis());
 
         //  Send 100 tasks
-        int task_nbr;
-        int total_msec = 0;     //  Total expected cost in msecs
-        for (task_nbr = 0; task_nbr < 100; task_nbr++) {
+        int taskNumber;
+        int totalCost = 0; //  Total expected cost in msecs
+        for (taskNumber = 0; taskNumber < 100; taskNumber++) {
             int workload;
             //  Random workload from 1 to 100msecs
             workload = srandom.nextInt(100) + 1;
-            total_msec += workload;
+            totalCost += workload;
             System.out.print(workload + ".");
             String string = String.format("%d", workload);
             sender.send(string, 0);
         }
-        System.out.println("Total expected cost: " + total_msec + " msec");
-        Thread.sleep(1000);              //  Give 0MQ time to deliver
+        System.out.println("Total expected cost: " + totalCost + " msec");
+        Thread.sleep(1000); //  Give 0MQ time to deliver
 
         sink.close();
         sender.close();

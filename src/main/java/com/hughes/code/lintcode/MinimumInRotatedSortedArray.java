@@ -1,11 +1,10 @@
 package com.hughes.code.lintcode;
 
-import org.apache.commons.lang3.ArrayUtils;
-
 /**
  * Created by Hughes on 2016/8/14.
  */
 public class MinimumInRotatedSortedArray {
+
     /**
      * @param nums: a rotated sorted array
      * @return: the minimum number in the array
@@ -14,7 +13,7 @@ public class MinimumInRotatedSortedArray {
         int size = nums.length - 1;
         int l = 0;
         int r = size;
-        while(l <= r) {
+        while (l <= r) {
             int mid = l + (r - l) / 2;
             if (nums[mid] > nums[size]) {
                 //left
@@ -42,8 +41,8 @@ public class MinimumInRotatedSortedArray {
         }*/
     }
 
-    public static void main(String[] args){
-        int[] nums = {6,1,2,3,4,5};
+    public static void main(String[] args) {
+        int[] nums = { 6, 1, 2, 3, 4, 5 };
         int result = new MinimumInRotatedSortedArray().findMin(nums);
         System.out.println(result);
     }

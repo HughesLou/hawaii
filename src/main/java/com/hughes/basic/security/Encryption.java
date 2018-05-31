@@ -1,13 +1,20 @@
 package com.hughes.basic.security;
 
-import javax.crypto.*;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.KeyGenerator;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
 
 /**
  * Created by Hughes on 2016/8/10.
  */
 public class Encryption {
+
     public static void main(String[] argv) {
 
         try {

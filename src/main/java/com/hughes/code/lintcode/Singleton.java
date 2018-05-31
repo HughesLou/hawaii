@@ -4,9 +4,11 @@ package com.hughes.code.lintcode;
  * Created by Hughes on 2016/8/14.
  */
 public class Singleton {
+
     private static volatile Singleton singleton;
 
-    private Singleton() {}
+    private Singleton() {
+    }
 
     /**
      * @return: The same instance of this class every time

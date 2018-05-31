@@ -6,6 +6,7 @@ import com.hughes.model.ListNode;
  * Created by Hughes on 2016/8/14.
  */
 public class ReverseLinkedList {
+
     public ListNode reverse(ListNode head) {
         if (null == head || null == head.getNext()) {
             return head;
@@ -41,7 +42,9 @@ public class ReverseLinkedList {
      * @return: The head of the reversed ListNode
      */
     public ListNode reverseBetween(ListNode head, int m, int n) {
-        if (m == n) { return head;}
+        if (m == n) {
+            return head;
+        }
         ListNode q = null;
         ListNode p = head;
         for (int i = 1; i < m; i++) {

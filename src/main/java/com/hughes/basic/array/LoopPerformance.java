@@ -9,6 +9,7 @@ import java.util.List;
  * Created by Hughes on 2016/8/9.
  */
 public class LoopPerformance {
+
     public static void main(String[] argv) {
 
         String sArray[] = createArray();
@@ -25,8 +26,8 @@ public class LoopPerformance {
         System.out.println("Start: " + lForwardStartTime);
 
         //for loop
-        for (int i=0; i< iListSize; i++){
-            stemp = (String)lList.get(i);
+        for (int i = 0; i < iListSize; i++) {
+            stemp = (String) lList.get(i);
         }
 
         long lForwardEndTime = new Date().getTime();
@@ -41,8 +42,8 @@ public class LoopPerformance {
         System.out.println("Start: " + lReverseStartTime);
 
         //for loop
-        for (int i=iListSize-1; i > 0; i--){
-            stemp = (String)lList.get(i);
+        for (int i = iListSize - 1; i > 0; i--) {
+            stemp = (String) lList.get(i);
         }
 
         long lReverseEndTime = new Date().getTime();
@@ -66,8 +67,7 @@ public class LoopPerformance {
         System.out.println("End:\t" + lIteratorEndTime);
 
         long lIteratorDifference = lIteratorEndTime - lIteratorStartTime;
-        System.out.println("Iterator - Elapsed time in milliseconds: "
-                + lIteratorDifference);
+        System.out.println("Iterator - Elapsed time in milliseconds: " + lIteratorDifference);
 
         System.out.println("\n--------- For Loop --------\n");
         long lForStartTime = new Date().getTime();
@@ -82,8 +82,7 @@ public class LoopPerformance {
         System.out.println("End:\t" + lForEndTime);
 
         long lForDifference = lForEndTime - lForStartTime;
-        System.out.println("For - Elapsed time in milliseconds: "
-                + lForDifference);
+        System.out.println("For - Elapsed time in milliseconds: " + lForDifference);
 
         System.out.println("\n--------- While Loop -------\n");
         long lWhileStartTime = new Date().getTime();
@@ -99,8 +98,7 @@ public class LoopPerformance {
         System.out.println("End:\t" + lWhileEndTime);
 
         long lWhileDifference = lWhileEndTime - lWhileStartTime;
-        System.out.println("While - Elapsed time in milliseconds: "
-                + lWhileDifference);
+        System.out.println("While - Elapsed time in milliseconds: " + lWhileDifference);
     }
 
     static String[] createArray() {

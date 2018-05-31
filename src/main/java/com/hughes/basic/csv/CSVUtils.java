@@ -1,7 +1,5 @@
 package com.hughes.basic.csv;
 
-import com.opencsv.CSVReader;
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -10,10 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.opencsv.CSVReader;
+
 /**
  * Created by Hughes on 2016/8/9.
  */
 public class CSVUtils {
+
     private static final char DEFAULT_SEPARATOR = ',';
     private static final char DEFAULT_QUOTE = '"';
 
@@ -25,7 +26,8 @@ public class CSVUtils {
         Scanner scanner = new Scanner(new File(csvFile));
         while (scanner.hasNext()) {
             List<String> line = parseLine(scanner.nextLine());
-            System.out.println("Country [id= " + line.get(0) + ", code= " + line.get(1) + " , name=" + line.get(2) + "]");
+            System.out.println("Country [id= " + line.get(0) + ", code= " + line.get(1) + " , name="
+                    + line.get(2) + "]");
         }
         scanner.close();
 
@@ -33,7 +35,8 @@ public class CSVUtils {
         try (CSVReader reader = new CSVReader(new FileReader(csvFile))) {
             String[] line;
             while ((line = reader.readNext()) != null) {
-                System.out.println("Country [id= " + line[0] + ", code= " + line[1] + " , name=" + line[2] + "]");
+                System.out.println("Country [id= " + line[0] + ", code= " + line[1] + " , name="
+                        + line[2] + "]");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -122,7 +125,8 @@ public class CSVUtils {
         writeLine(w, values, DEFAULT_SEPARATOR, ' ');
     }
 
-    public static void writeLine(Writer w, List<String> values, char separators) throws IOException {
+    public static void writeLine(Writer w, List<String> values, char separators)
+            throws IOException {
         writeLine(w, values, separators, ' ');
     }
 
@@ -135,7 +139,8 @@ public class CSVUtils {
         return result;
     }
 
-    public static void writeLine(Writer w, List<String> values, char separators, char customQuote) throws IOException {
+    public static void writeLine(Writer w, List<String> values, char separators, char customQuote)
+            throws IOException {
         boolean first = true;
         //default customQuote is empty
         if (separators == ' ') {

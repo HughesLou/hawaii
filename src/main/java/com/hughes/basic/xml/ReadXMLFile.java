@@ -1,5 +1,12 @@
 package com.hughes.basic.xml;
 
+import java.io.File;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -7,12 +14,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-import java.io.File;
 
 /**
  * Created by Hughes on 2016/8/9.
@@ -42,10 +43,14 @@ public class ReadXMLFile {
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) nNode;
                     System.out.println("Staff id : " + eElement.getAttribute("id"));
-                    System.out.println("First Name : " + eElement.getElementsByTagName("firstname").item(0).getTextContent());
-                    System.out.println("Last Name : " + eElement.getElementsByTagName("lastname").item(0).getTextContent());
-                    System.out.println("Nick Name : " + eElement.getElementsByTagName("nickname").item(0).getTextContent());
-                    System.out.println("Salary : " + eElement.getElementsByTagName("salary").item(0).getTextContent());
+                    System.out.println("First Name : "
+                            + eElement.getElementsByTagName("firstname").item(0).getTextContent());
+                    System.out.println("Last Name : "
+                            + eElement.getElementsByTagName("lastname").item(0).getTextContent());
+                    System.out.println("Nick Name : "
+                            + eElement.getElementsByTagName("nickname").item(0).getTextContent());
+                    System.out.println("Salary : "
+                            + eElement.getElementsByTagName("salary").item(0).getTextContent());
 
                 }
             }
@@ -66,7 +71,7 @@ public class ReadXMLFile {
                 boolean bsalary = false;
 
                 public void startElement(String uri, String localName, String qName,
-                                         Attributes attributes) throws SAXException {
+                        Attributes attributes) throws SAXException {
 
                     System.out.println("Start Element :" + qName);
 
@@ -88,8 +93,8 @@ public class ReadXMLFile {
 
                 }
 
-                public void endElement(String uri, String localName,
-                                       String qName) throws SAXException {
+                public void endElement(String uri, String localName, String qName)
+                        throws SAXException {
 
                     System.out.println("End Element :" + qName);
 

@@ -6,6 +6,7 @@ import com.hughes.model.ListNode;
  * Created by Hughes on 2016/8/14.
  */
 public class DeleteNode {
+
     /**
      * @param node: the node in the list should be deleted
      * @return: nothing

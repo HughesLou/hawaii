@@ -4,6 +4,7 @@ package com.hughes.code.lintcode;
  * Created by Hughes on 2016/8/14.
  */
 public class Pow {
+
     /**
      * @param x the base number
      * @param n the power number

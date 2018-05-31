@@ -8,7 +8,10 @@ package com.hughes.file;
  * Created by 1466811 on 11/12/2015.
  */
 public class FPMEvent {
-    public enum EventType {NEW, UPDATE, DELETE}
+
+    public enum EventType {
+        NEW, UPDATE, DELETE
+    }
 
     private EventType eventType;
     private boolean programmatic;
@@ -56,11 +59,7 @@ public class FPMEvent {
 
     @Override
     public String toString() {
-        return "FPMEvent{" +
-                "eventType=" + eventType +
-                ", programmatic=" + programmatic +
-                ", key='" + key + '\'' +
-                ", value='" + value + '\'' +
-                '}';
+        return "FPMEvent{" + "eventType=" + eventType + ", programmatic=" + programmatic + ", key='"
+                + key + '\'' + ", value='" + value + '\'' + '}';
     }
 }

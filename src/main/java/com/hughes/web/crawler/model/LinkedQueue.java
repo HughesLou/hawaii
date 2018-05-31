@@ -4,12 +4,12 @@
 
 package com.hughes.web.crawler.model;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.HashSet;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created by 1466811 on 12/30/2015.
@@ -48,7 +48,8 @@ public class LinkedQueue {
     }
 
     public static void addUnvisitedUrl(String url) {
-        if (StringUtils.isNotEmpty(url) && !visitedUrl.contains(url) && !unVisitedUrl.contains(url)) {
+        if (StringUtils.isNotEmpty(url) && !visitedUrl.contains(url)
+                && !unVisitedUrl.contains(url)) {
             unVisitedUrl.add(url);
         }
     }

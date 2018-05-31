@@ -6,6 +6,7 @@ import java.util.Stack;
  * Created by Hughes on 2016/8/14.
  */
 public class Queue {
+
     private Stack<Integer> stack1;
     private Stack<Integer> stack2;
 

@@ -1,9 +1,13 @@
 package com.hughes;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import net.glxn.qrgen.core.image.ImageType;
 import net.glxn.qrgen.javase.QRCode;
-
-import java.io.*;
 
 /**
  * Description:
@@ -14,8 +18,8 @@ public class QRSample {
 
     public static void main(String[] args) {
         String string = "hello";
-        ByteArrayOutputStream out = QRCode.from(string).withCharset("UTF-8").withSize(250, 250).to(ImageType.JPG).stream();
-
+        ByteArrayOutputStream out = QRCode.from(string).withCharset("UTF-8").withSize(250, 250)
+                .to(ImageType.JPG).stream();
 
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(new File("QR.jpg"));

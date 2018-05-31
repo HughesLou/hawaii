@@ -4,6 +4,8 @@
 
 package com.hughes.storm;
 
+import java.util.Map;
+
 import backtype.storm.Config;
 import backtype.storm.LocalCluster;
 import backtype.storm.StormSubmitter;
@@ -17,13 +19,13 @@ import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 import backtype.storm.utils.Utils;
 
-import java.util.Map;
-
 /**
  * Created by 1466811 on 9/18/2015.
  */
 public class ExclamationTopology {
+
     public static class ExclamationBolt extends BaseRichBolt {
+
         OutputCollector collector;
 
         @Override

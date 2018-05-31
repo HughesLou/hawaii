@@ -8,7 +8,6 @@ package com.hughes.lou.classloader;
  * Created by Hughes on 2016/3/30.
  */
 
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,8 +15,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-
 public class MyClassLoader extends ClassLoader {
+
     private String name;
     private String path = "H:\\Repository\\";
     private static final String HOME = "H:\\Repository\\";
@@ -49,8 +48,7 @@ public class MyClassLoader extends ClassLoader {
     @Override
     public Class<?> findClass(String name) throws ClassNotFoundException {
         byte[] data = this.loadClassData(name);
-        if (data == null)
-            throw new ClassNotFoundException();
+        if (data == null) throw new ClassNotFoundException();
         return this.defineClass(name, data, 0, data.length);
 
     }
@@ -83,12 +81,10 @@ public class MyClassLoader extends ClassLoader {
             try {
                 is.close();
                 baos.close();
-            } catch (Exception e2) {
-            }
+            } catch (Exception e2) {}
         }
         return data;
     }
-
 
     public static void main(String[] args) throws Exception {
         //假定的系统加载器
@@ -109,8 +105,6 @@ public class MyClassLoader extends ClassLoader {
         //测试命名空间
         System.out.println("-------------test namespace--------------");
         testNameSpace(user);
-
-
 
         MyClassLoader loader = new MyClassLoader(null, "loader");
         loader.setPath(HOME + "usr\\");
