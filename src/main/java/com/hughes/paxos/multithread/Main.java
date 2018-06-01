@@ -14,29 +14,35 @@ import java.util.concurrent.Executors;
  */
 public class Main {
 
-    private static final int NUM_OF_PROPOSER = 5;
-    public static final CountDownLatch COUNT_DOWN_LATCH = new CountDownLatch(NUM_OF_PROPOSER);
-    private static final int NUM_OF_ACCEPTOR = 7;
+    private static final int NUM_OF_PROPOSER = 7;
+    public static final CountDownLatch START_LATCH = new CountDownLatch(NUM_OF_PROPOSER);
+    public static final CountDownLatch STOP_LATCH = new CountDownLatch(NUM_OF_PROPOSER);
+    private static final int NUM_OF_ACCEPTOR = 9;
 
     public static void main(String[] args) {
-        int acceptorNum = NUM_OF_ACCEPTOR;
-        int proposerNum = NUM_OF_PROPOSER;
+        try {
+            int acceptorNum = NUM_OF_ACCEPTOR;
+            int proposerNum = NUM_OF_PROPOSER;
 
-        if (args.length == 2) {
-            acceptorNum = getIntValue(args[0], NUM_OF_ACCEPTOR);
-            proposerNum = getIntValue(args[1], NUM_OF_PROPOSER);
-        }
+            if (args.length == 2) {
+                acceptorNum = getIntValue(args[0], NUM_OF_ACCEPTOR);
+                proposerNum = getIntValue(args[1], NUM_OF_PROPOSER);
+            }
 
-        List<Acceptor> acceptors = new ArrayList<>();
-        for (int i = 0; i < acceptorNum; i++) {
-            acceptors.add(new Acceptor(i, "A." + i));
-        }
+            List<Acceptor> acceptors = new ArrayList<>();
+            for (int i = 0; i < acceptorNum; i++) {
+                acceptors.add(new Acceptor(i, "A." + i));
+            }
 
-        ExecutorService executorService = Executors.newCachedThreadPool();
-        for (int i = 0; i < proposerNum; i++) {
-            Proposer proposer = new Proposer(i, "P." + 1, proposerNum, acceptors);
-            executorService.submit(proposer);
+            ExecutorService executorService = Executors.newCachedThreadPool();
+            for (int i = 0; i < proposerNum; i++) {
+                Proposer proposer = new Proposer(i, "P." + i, proposerNum, acceptors);
+                executorService.submit(proposer);
+            }
+            Main.STOP_LATCH.await();
+            executorService.shutdown();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        executorService.shutdown();
     }
 }

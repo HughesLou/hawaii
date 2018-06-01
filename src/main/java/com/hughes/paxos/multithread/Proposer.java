@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 
 /**
  * @author hugheslou
@@ -61,23 +62,25 @@ public class Proposer implements Runnable {
                 if (prepareResult.isPromised()) {
                     promisedCount++;
                 } else {
-                    // 决策者已经通过了一个题案
-                    if (prepareResult.getAcceptorStatus() == AcceptorStatus.ACCEPTED) {
-                        acceptedProposals.add(prepareResult.getProposal());
-                    }
+                    // 决策者通过的提案
+                    acceptedProposals.add(prepareResult.getProposal());
                 }
             }
 
             // 获得多数决策者的承诺
-            // 可以进行第二阶段：题案提交
+            // 可以进行第二阶段：提案提交
             if (promisedCount >= majority) {
                 return true;
             }
             Proposal votedProposal = getVotedProposal(acceptedProposals);
-            // 决策者已经半数通过题案
+            // 决策者已经半数通过提案
             if (votedProposal != null) {
-                System.out.println(id + " @vote end with: " + votedProposal);
-                return true;
+                // 小概率会出现，prepare阶段已经发现；后续的accept过程中因为网络原因超过半数节点无法accept
+                // 导致重新生成提案再进行prepare
+                // 所以当prepare返回false时，accept阶段将跳过
+                proposal = votedProposal;
+                System.out.println("======== " + name + " vote end with: " + votedProposal);
+                return false;
             }
             prepareNewProposal(acceptedProposals);
         }
@@ -100,7 +103,7 @@ public class Proposer implements Runnable {
                     continue;
                 }
 
-                // 题案被决策者接受。
+                // 提案被决策者接受。
                 if (acceptResult.isAccepted()) {
                     acceptedCount++;
                 } else {
@@ -108,14 +111,14 @@ public class Proposer implements Runnable {
                 }
             }
 
-            // 题案被半数以上决策者接受，说明题案已经被选出来。
+            // 提案被半数以上决策者接受，说明提案已经被选出来。
             if (acceptedCount >= majority) {
-                System.out.println(id + " @vote accept with: " + proposal);
+                System.out.println("======== " + name + " vote accept with: " + proposal);
                 return true;
             } else {
                 prepareNewProposal(acceptedProposals);
                 // 回退到决策准备阶段
-                if (prepare()) {
+                if (!prepare()) {
                     return true;
                 }
             }
@@ -123,36 +126,24 @@ public class Proposer implements Runnable {
     }
 
     private void prepareNewProposal(List<Proposal> proposalList) {
-        Proposal maxIdAcceptedProposal = proposalList.stream()
-                .max(Comparator.comparingInt(p -> p.getId())).orElse(null);
-        // 在已经被决策者通过题案中选择序列号最大的决策,重新生成递增id，改变自己的value为序列号最大的value。
-        // 这是一种预测，预测此maxIdAccecptedProposal最有可能被超过半数的决策者接受。
+        Proposal maxIdAcceptedProposal = proposalList.stream().filter(Objects::nonNull)
+                .filter(pro -> pro.getId() >= 0).max(Comparator.comparingInt(p -> p.getId()))
+                .orElse(null);
+        // 在已经被决策者通过提案中选择序列号最大的决策,重新生成递增id，改变自己的value为序列号最大的value。
+        // 这是一种预测，预测此maxIdAcceptedProposal最有可能被超过半数的决策者接受。
         if (maxIdAcceptedProposal != null) {
-            proposal.setId(PaxosUtil.generateId(id, numCycle, proposerNumber));
             proposal.setValue(maxIdAcceptedProposal.getValue());
-        } else {
-            proposal.setId(PaxosUtil.generateId(id, numCycle, proposerNumber));
         }
+        proposal.setId(PaxosUtil.generateId(id, numCycle, proposerNumber));
+        System.out.println(name + " with new proposal: " + proposal);
         numCycle++;
     }
 
     // 是否已经有某个提案，被大多数决策者接受
-    private Proposal getVotedProposal(List<Proposal> acceptedProposals) {
-        Map<Proposal, Integer> proposalCount = countAcceptedProposalCount(acceptedProposals);
-        for (Entry<Proposal, Integer> entry : proposalCount.entrySet()) {
-            if (entry.getValue() >= majority) {
-                return entry.getKey();
-            }
-        }
-        return null;
-    }
-
-    // 计算决策者回复的每个已经被接受的提案计数
-    private Map<Proposal, Integer> countAcceptedProposalCount(List<Proposal> acceptedProposals) {
+    private Proposal getVotedProposal(List<Proposal> proposalList) {
         Map<Proposal, Integer> proposalCount = new HashMap<>();
-        for (Proposal pro : acceptedProposals) {
-            // 决策者没有回复，或者网络异常
-            if (null == pro) {
+        for (Proposal pro : proposalList) {
+            if (null == pro || pro.getId() < 0) {
                 continue;
             }
             int count = 1;
@@ -162,23 +153,26 @@ public class Proposer implements Runnable {
             proposalCount.put(pro, count);
         }
 
-        return proposalCount;
+        for (Entry<Proposal, Integer> entry : proposalCount.entrySet()) {
+            if (entry.getValue() >= majority) {
+                return entry.getKey();
+            }
+        }
+        return null;
     }
 
     @Override
     public void run() {
-        // 用来控制Proposer同时启动
-        Main.COUNT_DOWN_LATCH.countDown();
         try {
-            Main.COUNT_DOWN_LATCH.await();
-        } catch (InterruptedException e) {
+            // 用来控制Proposer同时启动
+            Main.START_LATCH.countDown();
+            Main.START_LATCH.await();
+            if (prepare()) {
+                accept();
+            }
+            Main.STOP_LATCH.countDown();
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
-        long start = System.currentTimeMillis();
-        prepare();
-        accept();
-        System.out.println(String.format("%s with %s cost %d ms", "P." + id, proposal,
-                System.currentTimeMillis() - start));
     }
 }

@@ -29,7 +29,7 @@ public class PaxosUtil {
         try {
             TimeUnit.MILLISECONDS.sleep(random.nextInt(SLEEP_TIME));
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.out.println(e.toString());
         }
     }
 

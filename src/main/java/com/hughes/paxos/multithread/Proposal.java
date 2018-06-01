@@ -9,11 +9,16 @@ import java.util.Objects;
 public class Proposal {
 
     // 提案的序列号
-    private int id;
+    private int id = -1;
     // 提案的值
     private String value;
 
     public Proposal() {
+    }
+
+    public Proposal(Proposal proposal) {
+        this.id = proposal.getId();
+        this.value = proposal.getValue();
     }
 
     public Proposal(int id, String value) {
@@ -35,6 +40,11 @@ public class Proposal {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public void copyFromInstance(Proposal proposal) {
+        this.id = proposal.id;
+        this.value = proposal.value;
     }
 
     @Override
