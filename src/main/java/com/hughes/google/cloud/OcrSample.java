@@ -1,11 +1,11 @@
 package com.hughes.google.cloud;
 
-import java.io.FileInputStream;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintStream;
+import java.net.URL;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,16 +34,21 @@ import com.google.protobuf.ByteString;
 public class OcrSample {
 
     public static void main(String... args) throws Exception {
-        // Instantiates a client
+        OcrSample ocrSample = new OcrSample();
+        String fileName = "hindi.jpg";
+        File file = new File(ocrSample.getClass().getClassLoader().getResource(fileName).getFile());
+//        ocrSample.process(file);
+        System.out.println("next...");
+
+        URL url = new URL("http://www.yinduabc.com/uploads/allimg/161021/113I110E-0.jpg");
+        ocrSample.detectHandwrittenOcr(url.openStream(), System.out);
+    }
+
+    private void process(File file) {
         try (ImageAnnotatorClient vision = ImageAnnotatorClient.create()) {
 
-            // The path to the image file to annotate
-            String fileName = "./resources/hindi.jpg";
-
             // Reads the image file into memory
-            Path path = Paths.get(fileName);
-            byte[] data = Files.readAllBytes(path);
-            ByteString imgBytes = ByteString.copyFrom(data);
+            ByteString imgBytes = ByteString.copyFrom(Files.readAllBytes(file.toPath()));
 
             // Builds the image annotation request
             List<AnnotateImageRequest> requests = new ArrayList<>();
@@ -68,25 +73,22 @@ public class OcrSample {
                             .forEach((k, v) -> System.out.printf("%s : %s\n", k, v.toString()));
                 }
             }
-
-            System.out.println("next...");
-
-            detectHandwrittenOcr("http://www.yinduabc.com/uploads/allimg/161021/113I110E-0.jpg",
-                    System.out);
+        } catch (Exception e) {
+            System.out.println("exception " + e);
         }
     }
 
     /**
      * Performs handwritten text detection on a local image file.
      *
-     * @param filePath The path to the local file to detect handwritten text on.
+     * @param inputStream The {@link InputStream} to image to detect handwritten text on.
      * @param out A {@link PrintStream} to write the results to.
      * @throws Exception on errors while closing the client.
      * @throws IOException on Input/Output errors.
      */
-    public static void detectHandwrittenOcr(String filePath, PrintStream out) throws Exception {
-        detectHandwrittenOcr(Image.newBuilder()
-                .setContent(ByteString.readFrom(new FileInputStream(filePath))).build(), out);
+    public void detectHandwrittenOcr(InputStream inputStream, PrintStream out) throws Exception {
+        detectHandwrittenOcr(
+                Image.newBuilder().setContent(ByteString.readFrom(inputStream)).build(), out);
     }
 
     /**
@@ -98,17 +100,17 @@ public class OcrSample {
      * @throws Exception on errors while closing the client.
      * @throws IOException on Input/Output errors.
      */
-    public static void detectHandwrittenOcrGcs(String gcsPath, PrintStream out) throws Exception {
+    public void detectHandwrittenOcrGcs(String gcsPath, PrintStream out) throws Exception {
         detectHandwrittenOcr(Image.newBuilder()
                 .setSource(ImageSource.newBuilder().setGcsImageUri(gcsPath).build()).build(), out);
     }
 
-    public static void detectHandwrittenOcr(Image img, PrintStream out) throws Exception {
+    public void detectHandwrittenOcr(Image img, PrintStream out) throws Exception {
         List<AnnotateImageRequest> requests = new ArrayList<>();
 
         Feature feat = Feature.newBuilder().setType(Type.DOCUMENT_TEXT_DETECTION).build();
         // Set the parameters for the image
-        ImageContext imageContext = ImageContext.newBuilder().addLanguageHints("en-t-i0-handwrit")
+        ImageContext imageContext = ImageContext.newBuilder().addLanguageHints("hi-t-i0-handwrit")
                 .build();
 
         AnnotateImageRequest request = AnnotateImageRequest.newBuilder().addFeatures(feat)
@@ -118,7 +120,6 @@ public class OcrSample {
         try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
             BatchAnnotateImagesResponse response = client.batchAnnotateImages(requests);
             List<AnnotateImageResponse> responses = response.getResponsesList();
-            client.close();
 
             for (AnnotateImageResponse res : responses) {
                 if (res.hasError()) {
