@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-import afu.org.checkerframework.checker.oigj.qual.O;
-
 /**
  * @author hugheslou
  * Created on 2018/7/16.
@@ -114,8 +112,12 @@ public class StockTransInfo implements Comparable<StockTransInfo>, Serializable 
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof StockTransInfo)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof StockTransInfo)) {
+            return false;
+        }
         StockTransInfo that = (StockTransInfo) o;
         return Objects.equals(getDate(), that.getDate())
                 && Objects.equals(getTime(), that.getTime())
