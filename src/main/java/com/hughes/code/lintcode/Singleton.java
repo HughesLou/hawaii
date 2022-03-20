@@ -14,7 +14,6 @@ public class Singleton {
      * @return: The same instance of this class every time
      */
     public static Singleton getInstance() {
-        // write your code here
         if (null == singleton) {
             synchronized (Singleton.class) {
                 if (null == singleton) {

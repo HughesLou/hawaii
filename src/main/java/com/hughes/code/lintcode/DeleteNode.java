@@ -12,8 +12,8 @@ public class DeleteNode {
      * @return: nothing
      */
     public void deleteNode(ListNode node) {
-        node.setNext(node.getNext().getNext());
-        node.setVal(node.getNext().getVal());
+        node.next = node.next.next;
+        node.val = node.next.val;
     }
 
     /**
@@ -29,20 +29,20 @@ public class DeleteNode {
         ListNode second = head;
         int i = 0;
         for (; first != null && i < n; i++) {
-            first = first.getNext();
+            first = first.next;
         }
         if (first == null) {
             if (i == n) {
-                return head.getNext();
+                return head.next;
             } else {
                 return null;
             }
         }
-        while (first.getNext() != null) {
-            first = first.getNext();
-            second = second.getNext();
+        while (first.next != null) {
+            first = first.next;
+            second = second.next;
         }
-        second.setNext(second.getNext().getNext());
+        second.next = second.next.next;
         return head;
     }
 }
