@@ -1,4 +1,4 @@
-# 澳门-202005
+# 澳门-202205
 
 澳门口岸横琴口岸<br>
 https://www.fsm.gov.mo/psp/pspmonitor/mobile/cotai.aspx
@@ -16,6 +16,15 @@ https://www.macaotourism.gov.mo/zh-hant/announcement
 https://www.macaotourism.gov.mo/zh-hant/article/promotion/my-treat-for-you
 
 
+
+
+## 与蛇口游轮母港确认
++ （一）2022 年 4 月 20 日零时起，经蛇口邮轮母港前往 澳门氹仔、澳门外港的出境人员，须凭“粤康码通关凭证” 绿码及“通关凭证”内显示的 48 小时内核酸检测阴性结果 信息证明；
++ （二）经澳门氹仔、澳门外港返回蛇口邮轮母港的入境 人员，须凭“粤康码通关凭证”绿码及“通关凭证”内显示 的 72 小时内核酸检测阴性结果信息证明。
+
+补充信息：
++ 1. 行程码是否带星，港口这边不做要求
++ 2. 返回的核酸需要72小时内，哪边做的无所谓，但需要是“通关凭证”内能显示的
 
 
 
